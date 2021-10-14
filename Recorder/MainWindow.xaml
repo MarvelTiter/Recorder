@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Recorder"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mt="clr-namespace:MT.Controls;assembly=MT.Controls"
+        Height="100"
         AllowsTransparency="True"
         Background="#88000000"
         MouseDown="Window_MouseDown"

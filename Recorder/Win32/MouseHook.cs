@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -94,17 +95,14 @@ namespace Recorder.Win32
         /// <summary>
         /// 启动全局钩子
         /// </summary>
-        public void SetHook()
+        public void SetHook(IntPtr handle)
         {
             // 安装鼠标钩子
             if (_hMouseHook == 0)
             {
                 // 生成一个HookProc的实例.
-                _mouseHookProcedure = new Win32Api.HookProc(MouseHookProc);
-                Process cProcess = Process.GetCurrentProcess();
-                ProcessModule cModule = cProcess.MainModule;
-                var mh = Win32Api.GetModuleHandle(cModule.ModuleName);
-                _hMouseHook = Win32Api.SetWindowsHookEx(WH_MOUSE_LL, _mouseHookProcedure, mh, 0);
+                _mouseHookProcedure = new Win32Api.HookProc(MouseHookProc);                
+                _hMouseHook = Win32Api.SetWindowsHookEx(WH_MOUSE_LL, _mouseHookProcedure, handle, 0);
             }
         }
 
@@ -121,7 +119,7 @@ namespace Recorder.Win32
         /// 鼠标钩子回调函数
         /// </summary>
         private int MouseHookProc(int nCode, Int32 wParam, IntPtr lParam)
-        {
+        {            
             // 假设正常执行而且用户要监听鼠标的消息
             if (nCode >= 0 && wParam != WM_MOUSEMOVE && (OnMouseActivity != null))
             {

@@ -24,7 +24,6 @@ namespace Recorder.Win32
         public const int WH_KEYBOARD_LL = 13;
 
 
-
         [StructLayout(LayoutKind.Sequential)] //声明键盘钩子的封送结构类型 
 
         public class KeyboardHookStruct
@@ -45,7 +44,7 @@ namespace Recorder.Win32
 
         #endregion
 
-        #region Api
+        #region Hook Api
 
         public delegate int HookProc(int nCode, Int32 wParam, IntPtr lParam);
 
@@ -61,6 +60,8 @@ namespace Recorder.Win32
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern int CallNextHookEx(int idHook, int nCode, Int32 wParam, IntPtr lParam);
 
+        #endregion
+
         [DllImport("user32")]
         public static extern int ToAscii(int uVirtKey, int uScanCode, byte[] lpbKeyState, byte[] lpwTransKey, int fuState);
 
@@ -70,7 +71,6 @@ namespace Recorder.Win32
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
 
-        #endregion
 
 
         //指定坐标处窗体句柄

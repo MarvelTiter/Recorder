@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace Recorder
     {
         public OperationType Type { get; set; }
         public Key Key { get; set; }
-        public MouseButtonState ButtonState { get; set; } 
+        public MouseButtonState ButtonState { get; set; }
         public MouseButton Button { get; set; }
         public Point Coordinate { get; set; }
 
@@ -42,6 +43,7 @@ namespace Recorder
     {
         KeyboardHook keyHook = new KeyboardHook();
         MouseHook mouseHook = new MouseHook();
+        IntPtr current = IntPtr.Zero;
         public ObservableCollection<Operation> Operations
         {
             get { return (ObservableCollection<Operation>)GetValue(OperationsProperty); }
@@ -86,14 +88,18 @@ namespace Recorder
             {
                 Operations.Clear();
             }
-            keyHook.SetHook();
+            Process cProcess = Process.GetCurrentProcess();
+            ProcessModule cModule = cProcess.MainModule;
+            current = Win32Api.GetModuleHandle(cModule.ModuleName);
+            keyHook.SetHook(current);
             keyHook.OnKeyDownEvent += Hook_OnKeyDownEvent;
 
-            mouseHook.SetHook();
+            mouseHook.SetHook(current);
             mouseHook.OnMouseActivity += MouseHook_OnMouseActivity;
         }
         private void Stop()
         {
+            Operations?.RemoveAt(Operations.Count - 1);
             keyHook.UnHook();
             keyHook.OnKeyDownEvent -= Hook_OnKeyDownEvent;
 

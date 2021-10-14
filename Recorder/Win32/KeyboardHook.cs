@@ -26,15 +26,12 @@ namespace Recorder.Win32
         public event KeyEvent OnKeyDownEvent;
         public event KeyEvent OnKeyUpEvent;
         public KeyboardHook() { }
-        public void SetHook()
+        public void SetHook(IntPtr handle)
         {
             if (hHook == 0)
             {
                 KeyboardHookDelegate = new Win32Api.HookProc(KeyboardHookProc);
-                Process cProcess = Process.GetCurrentProcess();
-                ProcessModule cModule = cProcess.MainModule;
-                var mh = Win32Api.GetModuleHandle(cModule.ModuleName);
-                hHook = Win32Api.SetWindowsHookEx(Win32Api.WH_KEYBOARD_LL, KeyboardHookDelegate, mh, 0);
+                hHook = Win32Api.SetWindowsHookEx(Win32Api.WH_KEYBOARD_LL, KeyboardHookDelegate, handle, 0);
             }
         }
 
