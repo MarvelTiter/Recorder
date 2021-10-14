@@ -30,6 +30,8 @@ namespace Recorder
     {
         public OperationType Type { get; set; }
         public Key Key { get; set; }
+        public MouseButtonState ButtonState { get; set; } 
+        public MouseButton Button { get; set; }
         public Point Coordinate { get; set; }
 
     }
@@ -106,10 +108,11 @@ namespace Recorder
             {
                 Type = OperationType.Mouse,
                 Coordinate = args.Coordinate,
+                Button = args.MouseButton,
+                ButtonState = args.MouseButtonState,
             };
             Operations.Add(p);
         }
-
 
         private void Hook_OnKeyDownEvent(object sender, Win32.KeyEventArgs args)
         {

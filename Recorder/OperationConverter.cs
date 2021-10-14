@@ -9,11 +9,11 @@ using System.Windows.Input;
 
 namespace Recorder
 {
-    class KeyConverter : BaseValueConverter<KeyConverter>
+    class EnumConverter : BaseValueConverter<EnumConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Key k)
+            if (value is Enum k)
             {
                 return $"{k}";
             }

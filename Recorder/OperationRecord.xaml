@@ -9,13 +9,14 @@
              DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <local:KeyConverter x:Key="KC" />
+        <local:EnumConverter x:Key="KC" />
         <local:PointConverter x:Key="PC" />
         <DataTemplate x:Key="keyboardTemplate" DataType="{x:Type local:Operation}">
             <Grid Width="80"
                   Height="80"
                   Margin="5"
                   Background="Yellow">
+                <Border BorderBrush="#ff101010" BorderThickness="2" />
                 <TextBlock HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="18"
@@ -29,10 +30,18 @@
                   Height="80"
                   Margin="5"
                   Background="Yellow">
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="18"
-                           Text="{Binding Coordinate, Converter={StaticResource PC}}" />
+                <Border BorderBrush="#ff101010" BorderThickness="2" />
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Text="{Binding Button, Converter={StaticResource KC}}" />
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="18"
+                               Text="{Binding Coordinate, Converter={StaticResource PC}}" />
+                </StackPanel>
+
             </Grid>
         </DataTemplate>
         <local:InputTemplateSelector x:Key="selector"
