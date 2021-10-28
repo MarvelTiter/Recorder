@@ -23,6 +23,14 @@ namespace Recorder.Win32
 
         public const int WH_KEYBOARD_LL = 13;
 
+        public const int MOUSEEVENTF_MOVE = 0x0001; //移动鼠标
+        public const int MOUSEEVENTF_LEFTDOWN = 0x0002; //模拟鼠标左键按下
+        public const int MOUSEEVENTF_LEFTUP = 0x0004; //模拟鼠标左键抬起
+        public const int MOUSEEVENTF_RIGHTDOWN = 0x0008; //模拟鼠标右键按下
+        public const int MOUSEEVENTF_RIGHTUP = 0x0010; //模拟鼠标右键抬起
+        public const int MOUSEEVENTF_MIDDLEDOWN = 0x0020; //模拟鼠标中键按下
+        public const int MOUSEEVENTF_MIDDLEUP = 0x0040; //模拟鼠标中键抬起
+        public const int MOUSEEVENTF_ABSOLUTE = 0x8000; //标示是否采用绝对坐标
 
         [StructLayout(LayoutKind.Sequential)] //声明键盘钩子的封送结构类型 
 
@@ -71,7 +79,8 @@ namespace Recorder.Win32
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
 
-
+        [DllImport("user32")]
+        public static extern int mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
 
         //指定坐标处窗体句柄
         [DllImport("user32.dll", EntryPoint = "WindowFromPoint")]

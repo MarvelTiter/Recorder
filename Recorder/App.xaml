@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:Recorder"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="pack://application:,,,/MT.Controls;component/Themes/Generic.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MT.Controls;component/Themes/Generic.xaml" />
+                <ResourceDictionary>
+                    <local:ViewModels x:Key="Locator" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

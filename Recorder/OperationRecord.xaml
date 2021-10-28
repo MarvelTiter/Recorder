@@ -6,7 +6,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <local:EnumConverter x:Key="KC" />
@@ -48,9 +47,10 @@
                                      KeyboardTemplate="{StaticResource keyboardTemplate}"
                                      MouseTemplate="{StaticResource mouseTemplate}" />
     </UserControl.Resources>
-    <ItemsControl VerticalContentAlignment="Center"
+    <ItemsControl VerticalAlignment="Center"
+                  VerticalContentAlignment="Center"
                   ItemTemplateSelector="{StaticResource selector}"
-                  ItemsSource="{Binding Operations}">
+                  ItemsSource="{Binding Operations, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel Orientation="Horizontal" />

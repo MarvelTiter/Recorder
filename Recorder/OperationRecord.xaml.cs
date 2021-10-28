@@ -34,6 +34,7 @@ namespace Recorder
         public MouseButtonState ButtonState { get; set; }
         public MouseButton Button { get; set; }
         public Point Coordinate { get; set; }
+        public Action<Operation> Do { get; set; }
 
     }
     /// <summary>
@@ -116,6 +117,7 @@ namespace Recorder
                 Coordinate = args.Coordinate,
                 Button = args.MouseButton,
                 ButtonState = args.MouseButtonState,
+                Do = MouseAction
             };
             Operations.Add(p);
         }
@@ -128,6 +130,19 @@ namespace Recorder
                 Key = args.Key,
             };
             Operations.Add(p);
+        }
+
+        public void MouseAction(Operation op)
+        {
+            var action = 0;
+            int x = (int)op.Coordinate.X;
+            int y = (int)op.Coordinate.Y;
+            Win32Api.mouse_event(Win32Api.MOUSEEVENTF_ABSOLUTE |Win32Api.MOUSEEVENTF_MOVE, x, y, 0, 0);
+            if (op.Button == MouseButton.Left)
+                action = Win32Api.MOUSEEVENTF_ABSOLUTE | Win32Api.MOUSEEVENTF_LEFTDOWN | Win32Api.MOUSEEVENTF_LEFTUP;
+            else if (op.Button == MouseButton.Right)
+                action = Win32Api.MOUSEEVENTF_ABSOLUTE | Win32Api.MOUSEEVENTF_RIGHTDOWN | Win32Api.MOUSEEVENTF_RIGHTUP;
+            Win32Api.mouse_event(action, x, y, 0, 0);
         }
 
         public OperationRecord()

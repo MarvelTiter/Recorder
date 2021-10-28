@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="MT.Controls" Version="1.0.1" />
+    <PackageReference Include="MT.Mvvm" Version="1.0.3" />
   </ItemGroup>
 
 </Project>
